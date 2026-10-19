@@ -1,0 +1,27 @@
+// Page colors, added at script start so the reddit blue-green background never flashes on load
+
+:root.theme-dark {
+    --pp-res-page: #262626;
+}
+
+// Reddit's first paint uses a literal background color, not its color token
+// The subreddit bar above the post is slotted into a shadow root that redeclares Reddit's color tokens
+html.theme-dark,
+html.theme-dark body,
+html.theme-dark #pdp-credit-bar {
+    background-color: var(--pp-res-page) !important;
+}
+
+// RES night mode grays, replace the blue-green reddit dark tones
+html.theme-dark,
+html.theme-dark body,
+html.theme-dark shreddit-app,
+html.theme-dark .theme-rpl {
+    --color-neutral-background: var(--pp-res-page) !important;
+    --color-neutral-background-weak: #1f1f1f !important;
+    --color-neutral-background-strong: #1f1f1f !important;
+    --color-neutral-background-hover: #2e2e2e !important;
+    --color-neutral-background-selected: #333333 !important;
+    --color-secondary-background: #333333 !important;
+    --color-secondary-background-hover: #3d3d3d !important;
+}

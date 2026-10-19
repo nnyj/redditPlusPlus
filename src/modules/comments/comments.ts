@@ -7,6 +7,7 @@ import { renderCollapseAward } from '../collapseAwards';
 import { css } from '../customCSS';
 import { filterComment } from '../filters/filters';
 import { lightbox } from '../images/customLightbox';
+import { renderResScore } from '../resLayout/resLayout';
 import { settings } from '../settings/settings';
 import { UserInfoElements, renderUserInfo } from '../users/userInfo';
 import { renderContextMenu } from './contextMenu';
@@ -174,6 +175,8 @@ function registerComment(comment: Element) {
 
 export async function renderComment(comment: Element) {
     //renderGuidlines(comment);
+
+    renderResScore(comment);
 
     // skip [deleted]
     if (comment.getAttribute(`author`) == `[deleted]`) return;

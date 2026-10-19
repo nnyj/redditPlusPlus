@@ -1,0 +1,159 @@
+// RES-style comment boxes: one colored bar per depth, alternating backgrounds, no avatars or curved threadlines.
+// Depth colors and backgrounds are set per depth attribute in resLayout.ts.
+
+// Custom elements default to inline, which breaks the bar into a stub once the parent grid is gone.
+// Forced, since roots loaded later stay inline and lose their bar and thread end line.
+shreddit-comment:not([hidden]) {
+    display: block !important;
+    border-top: 1px solid var(--pp-res-border);
+    border-left: 5px solid var(--pp-res-bar);
+    border-radius: 3px;
+}
+
+// Thread roots end in a 2px dark red line, then a 5px gap of page background
+shreddit-comment[depth='0'] {
+    margin: 0 0 5px !important;
+    border-bottom: 2px solid var(--pp-res-thread-end);
+}
+
+// The comments section spaces roots with a 16px gap
+section[aria-label='Comments'] {
+    gap: 0 !important;
+}
+
+shreddit-comment:has(> details:not([open])) {
+    --pp-res-bar: var(--pp-res-collapsed) !important;
+}
+
+// Click strip exactly over the bar, see the click handler in resLayout.ts.
+// Reddit draws the curved branch line with this pseudo-element, so its border is reset.
+shreddit-comment::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -5px;
+    width: 5px;
+    z-index: 1;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: none;
+    cursor: pointer;
+}
+
+shreddit-comment[pp-res-edge-hover]::before {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+// In-thread ads pull the next root up 16px over the red line.
+// Beside "more replies", Reddit paints a page-colored square over the depth bars and a curved branch line.
+shreddit-comment-tree-ad,
+shreddit-comment::after,
+.more-comments-partial::before,
+.more-comments-partial::after,
+shreddit-comment [class*='branchline'],
+shreddit-comment #comment-children > :not(shreddit-comment, faceplate-partial),
+shreddit-comment .collapse-container,
+shreddit-comment div[slot='commentAvatar'],
+shreddit-comment .threadline-strip,
+shreddit-comment .ssr-thread-line {
+    display: none !important;
+}
+
+shreddit-comment > details {
+    position: relative;
+}
+
+// First grid column held the avatar, the collapse button and the threadline, the 0 width column keeps auto-placement intact
+shreddit-comment > details > summary,
+shreddit-comment > details > .comment-main-grid {
+    grid-template-columns: 0 minmax(0, 1fr) !important;
+}
+
+shreddit-comment > details > summary > div:first-child,
+shreddit-comment > details > .comment-main-grid > div.relative:not(.col-start-2),
+shreddit-comment > details > summary > div:first-child *,
+shreddit-comment > details > .comment-main-grid > div.relative:not(.col-start-2) * {
+    visibility: hidden !important;
+}
+
+shreddit-comment > details > summary > div[slot='commentMeta'],
+shreddit-comment > details > .comment-main-grid > .col-start-2 {
+    padding-left: 6px !important;
+}
+
+// Replies sit 2px inside the parent bar, RES style
+shreddit-comment > details > .comment-main-grid > #comment-children,
+shreddit-comment > details > .comment-main-grid > .fold-more:not(.hidden) {
+    display: block !important;
+    margin-left: 2px;
+}
+
+// Flair on the same line as the name
+shreddit-comment div[slot='commentMeta'] .flex-col {
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+// Vertical rhythm measured from the RES screenshot: name 4px below the border, text 20px below the name
+shreddit-comment div[slot='commentMeta'] {
+    padding-block: 2px 0 !important;
+}
+
+shreddit-comment div[slot='comment'] {
+    padding-block: 0 !important;
+}
+
+shreddit-comment div[slot='comment'] > div {
+    margin-inline: 0 !important;
+}
+
+shreddit-comment .pp_res_score {
+    margin-inline-end: 4px;
+    color: var(--color-neutral-content-strong);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+// Action row: a 20px row 2px below the text, the 22px buttons overflow it by 1px each side.
+// The row is raised so the reply below does not paint over that overflow.
+shreddit-comment > details > .comment-main-grid > div:has(> div[slot='actionRow']) {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 20px;
+    margin: 2px 0 0 !important;
+    padding: 0 !important;
+}
+
+shreddit-comment div[slot='actionRow'] {
+    min-height: 0 !important;
+}
+
+// Reddit's 15px bottom margin pushed the buttons up into the text.
+// Below 22px each button's padding and border no longer fit, so their hover pills had different heights.
+// transform and zoom both misplace the overflow menu popup, so the size token is the only safe shrink.
+shreddit-comment-action-row {
+    --size-button-sm-h: 22px;
+    margin: 0 !important;
+    opacity: 0.05;
+    transition: opacity 0.15s;
+}
+
+shreddit-comment-action-row:hover,
+shreddit-comment-action-row:focus-within,
+shreddit-comment-action-row:has([aria-expanded='true']) {
+    opacity: 1;
+}
+
+// Colors sampled from RES night mode, the light theme keeps Reddit's colors
+:root.theme-dark {
+    --pp-res-bg-even: #161616;
+    --pp-res-bg-odd: #121212;
+    --pp-res-border: #333333;
+    --pp-res-thread-end: #8b0000;
+    --pp-res-collapsed: #444444;
+}

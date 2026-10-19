@@ -13,6 +13,8 @@ function safePixels(value: string): string {
 export function renderWideMode(pageContainer: Element, rightSidebar: Element) {
     if (settings.WIDE_MODE.isDisabled() && settings.REMOVE_RIGHT_SIDEBAR.isDisabled()) return;
 
+    if (settings.RES_LAYOUT.isEnabled()) return;
+
     css.addStyle(wideModeStyle, `wideMode`);
 
     css.addVar(`--pp-content-width`, safePixels(settings.CONTENT_WIDTH.get()));

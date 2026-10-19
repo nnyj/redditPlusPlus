@@ -1,0 +1,62 @@
+// RES-style right sidebar: parked off the right edge with a 30px strip showing, slides out on hover.
+// --ais-w is the width of the ai-summarizer button tab, 0 when that script is absent.
+
+// The feed column has a fixed 1120px width, which overflows once the sidebar column is gone
+#subgrid-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+}
+
+.main-container {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding-right: 32px;
+    box-sizing: border-box;
+}
+
+// Reddit hides the sidebar below 960px, RES keeps it at every width
+#right-sidebar-container {
+    display: block !important;
+    position: fixed !important;
+    top: var(--shreddit-header-height, 56px) !important;
+    right: var(--ais-w, 0px) !important;
+    z-index: 1000;
+    width: 316px !important;
+    max-width: 316px !important;
+    height: calc(100vh - var(--shreddit-header-height, 56px));
+    max-height: none !important;
+    margin: 0 !important;
+    padding-left: 2px;
+    overflow-y: auto;
+    // RES sidebar sits on the page background, Reddit's cards inside use the weak tone
+    --color-neutral-background-weak: var(--color-neutral-background);
+    background-color: var(--color-neutral-background);
+    border-left: 2px solid #777777;
+    transform: translateX(286px);
+    transition: transform 0.3s ease;
+}
+
+#right-sidebar-container:hover {
+    transform: translateX(0);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+// Below 768px Reddit hides the sidebar blocks with hidden xs:block
+#right-sidebar-container .hidden.xs\:block {
+    display: block !important;
+}
+
+// Recommendation blocks in the right sidebar, the community card stays
+#answers-suggested-queries-pdp,
+#right-sidebar-container aside[aria-label='Related Posts Section'] {
+    display: none !important;
+}
+
+// Logged out, the left sidebar is a sign-up panel. The header login button marks the logged-out state.
+html:has(faceplate-tracker[noun='login']) #left-sidebar-container {
+    display: none !important;
+}
+
+html:has(faceplate-tracker[noun='login']) .grid-container {
+    --flex-nav-width: 0px !important;
+}

@@ -60,6 +60,7 @@ function renderSettingsWindow(win: Window, context: any) {
     addSettingString(`UI font size`, `Text size for UI elements (headings, buttons, etc.) (default: 12px)`, settings.BIGGER_FONTS_OTHER_SIZE);
     addSettingOptions(`Awards`, `Collapse awards for non-upvoted posts and comments or remove them completely`, settings.COLLAPSE_AWARDS);
     addSettingOptions(`Redirect`, `Behavior when visiting old.reddit pages`, settings.REDIRECT_MODE);
+    addSettingToggle(`RES layout`, `Old reddit style comments, feed rows and slide-out sidebar`, settings.RES_LAYOUT);
 
     addSubtitle(`Content`);
     addGotoButton(`Filters`, `Hide posts and comments using regular expressions`, filtersWindow);

@@ -11,6 +11,7 @@ import { renderCollapseAward } from '../collapseAwards';
 import { CustomCSS } from '../customCSS';
 import { filterPost } from '../filters/filters';
 import { lightbox } from '../images/customLightbox';
+import { renderResPost } from '../resLayout/resFeed';
 import { settings } from '../settings/settings';
 import { FlairData, renderFlair } from '../subs/flair';
 import { pp_log } from '../toaster';
@@ -68,7 +69,7 @@ async function postDataLoader(post: string): Promise<PostData> {
     return postData;
 }
 
-if (settings.BACKPLATES.isEnabled()) {
+if (settings.BACKPLATES.isEnabled() && settings.RES_LAYOUT.isDisabled()) {
     postsCss.addStyle(backplatesStyle);
 }
 
@@ -80,6 +81,7 @@ export async function renderPost(post: Element) {
     if (!shadowRoot) {
         pp_log(`${post.getAttribute(`permalink`)} wasn't loaded properly, waiting for loading...`);
         new MutationObserver((_, observer) => {
+            post.removeAttribute(`pp-rendered`);
             renderPost(post);
             observer.disconnect();
         }).observe(post, { childList: true });
@@ -88,6 +90,7 @@ export async function renderPost(post: Element) {
 
     postsCss.register(shadowRoot);
     bookmarksCss.register(shadowRoot);
+    renderResPost(post);
 
     renderPostFlair(post);
 

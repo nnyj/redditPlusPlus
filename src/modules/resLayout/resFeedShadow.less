@@ -1,0 +1,13 @@
+// Inside each feed shreddit-post: only the RES row slot shows. The native card stays in the DOM so its buttons can be clicked.
+:host > :not(slot[name='full-post-link']) {
+    display: none !important;
+}
+
+// Preview open: the native card's grid shows again, but only the cell holding the expando media
+:host(.pp_res_expanded) > div.grid {
+    display: block !important;
+}
+
+:host(.pp_res_expanded) > div.grid > :not(:has(> slot[name='expando-content'])) {
+    display: none !important;
+}

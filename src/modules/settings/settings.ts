@@ -175,6 +175,7 @@ class SettingsManager {
     public SAVED_BOOKMARK_COMMENTS = new SettingDropdownProperty(`savedBookmarkComments`, Object.values(BookmarkMode), 1);
     public GUIDELINES_COLOR = new SettingDropdownProperty(`guidelinesColor`, Object.values(GuidelinesColor), 0);
     public GUIDELINES_THICK = new SettingBoolProperty(`guidelinesThick`, false);
+    public RES_LAYOUT = new SettingBoolProperty(`resLayout`);
 
     constructor() {
         // Reload all pages with dirted settings
