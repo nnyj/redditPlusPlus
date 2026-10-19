@@ -1,0 +1,75 @@
+.pp_scrollToTop_anchor {
+    position: absolute;
+    top: 0px;
+    height: 1000px;
+}
+
+.pp_scrollToTop {
+    position: fixed;
+    width: 100px;
+    height: 100%;
+    bottom: 0px;
+    //left: runtime;
+    background: linear-gradient(0deg, var(--scrollLineColor) 1%, var(--scrollLineTransparentColor) 30%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    cursor: pointer;
+    color: var(--scrollLineTransparentColor);
+    opacity: 1;
+
+    transition:
+        padding-bottom 0.2s ease-in,
+        color 0.2s ease-in,
+        opacity 0.5s ease;
+
+    // to avoid overlap with sidebar edge buttons
+    clip-path: inset(0 0 0 8px);
+    svg {
+        padding-left: 8px;
+    }
+}
+
+.pp_scrollToTop_inverted {
+    transform: scale(1, -1);
+}
+
+.pp_scrollToTop:hover {
+    padding-bottom: 50px !important;
+    color: var(--scrollButtonColor);
+
+    transition:
+        padding-bottom 0.2s ease-out,
+        color 0.2s ease-out,
+        opacity 0.5s ease;
+}
+
+.pp_scrollToTop::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, var(--scrollLineColor) 5%, var(--scrollLineTransparentColor) 50%);
+    transition: opacity 0.2s ease-in;
+}
+
+.pp_scrollToTop:hover::before {
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+}
+
+:root {
+    --scrollLineColor: #e5ebee6e;
+    --scrollLineTransparentColor: #e5ebee00;
+    --scrollButtonColor: #c9d1d4c2;
+}
+:root.theme-dark {
+    --scrollLineColor: #3f484d33 !important;
+    --scrollLineTransparentColor: #30343600 !important;
+    --scrollButtonColor: #969a9c !important;
+}

@@ -1,0 +1,30 @@
+@media (min-width: 1392px) {
+    .pp_pageContainer {
+        margin-right: 300px;
+        --flex-nav-width: 272px !important;
+    }
+    .pp_mainFeed {
+        width: var(--pp-content-width) !important;
+        position: relative;
+        left: var(--pp-content-offset);
+    }
+    .pp_mainFeed > div > main {
+        max-width: var(--pp-content-width) !important;
+    }
+    .pp_rightSidebar {
+        grid-column-start: 3;
+        order: 10;
+    }
+    #right-sidebar-container {
+        position: fixed;
+        right: 0px;
+        margin: 15px 10px 0px 0px;
+    }
+    .pp_rightSidebar_contextLookup {
+        grid-column-start: 3;
+        order: 10;
+        position: fixed;
+        right: 0px;
+        margin: 15px 10px 0px 0px;
+    }
+}
