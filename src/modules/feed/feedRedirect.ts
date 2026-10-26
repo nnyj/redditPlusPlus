@@ -2,6 +2,7 @@ import { getCurrentCustomFeed } from '../customFeed/customFeed';
 import { getCurrentSub } from '../subs/subs';
 import { customFeedData, defaultFeedData, defaultSorts, generateFeedHref, subsFeedData, subsLatestSort } from './feed';
 import { FeedLocation, getFeedLocation } from './feedLocation';
+import { FeedSort } from './feedSort';
 
 export interface RedirectConfig {
     tittle: string;
@@ -75,14 +76,14 @@ function checkFeedRedirect() {
         if (subData != null) {
             if (subData.defaultSort == latest || !subData.redirect) return;
 
-            document.location.replace(`${document.location.href}${subData.defaultSort.toString().toLowerCase()}/`);
+            document.location.replace(sortedHref(subData.defaultSort));
             return;
         }
 
         if (!data.redirect) return;
 
         if (latest != null && data.defaultSort != latest) {
-            document.location.replace(`${document.location.href}${data.defaultSort.toString().toLowerCase()}/`);
+            document.location.replace(sortedHref(data.defaultSort));
             return;
         }
     }
@@ -94,7 +95,7 @@ function checkFeedRedirect() {
         if (customData != null) {
             if (customData.defaultSort == defaultSort || !customData.redirect) return;
 
-            document.location.replace(`${document.location.href}${customData.defaultSort.toString().toLowerCase()}/`);
+            document.location.replace(sortedHref(customData.defaultSort));
             return;
         }
     }
@@ -102,4 +103,10 @@ function checkFeedRedirect() {
     if (data.defaultSort == defaultSort) return;
 
     document.location.replace(`https://www.reddit.com${generateFeedHref(location, data.defaultSort)}`);
+}
+
+// sort goes into the path, before the query, and the path may lack its trailing slash
+function sortedHref(sort: FeedSort): string {
+    const path = document.location.pathname.endsWith(`/`) ? document.location.pathname : `${document.location.pathname}/`;
+    return `${path}${sort.toString().toLowerCase()}/${document.location.search}`;
 }

@@ -116,16 +116,10 @@ export function checkSortCommentsRedirect(): boolean {
             return false;
         }
 
-        let postHref = window.location.href;
+        const postUrl = new URL(window.location.href);
+        postUrl.searchParams.set(`sort`, config.href);
 
-        const hasQueryThatIsNotSort = postHref.includes('?') && !postHref.includes(SORT_SEPARATOR);
-        if (postHref.includes(SORT_SEPARATOR)) {
-            const separatorIndex = postHref.indexOf(SORT_SEPARATOR);
-            const newString = postHref.slice(0, separatorIndex - 1);
-            postHref = newString;
-        }
-
-        window.location.replace(postHref + (hasQueryThatIsNotSort ? '&' : '?') + SORT_SEPARATOR + config.href);
+        window.location.replace(postUrl.toString());
         return true;
     }
 

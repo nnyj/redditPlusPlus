@@ -57,14 +57,14 @@ async function subDataLoader(sub: string): Promise<SubData> {
 }
 
 export function getCurrentSub(): string | null {
-    const raw = window.location.href.split(`reddit.com/r/`);
+    const parts = window.location.pathname.split(`/`);
 
-    if (raw.length < 2) {
+    if (parts[1] != `r` || !parts[2]) {
         pp_log(`Failed to get sub name from: ${window.location.href}`);
         return null;
     }
 
-    return raw[1].split(`/`)[0];
+    return parts[2];
 }
 
 export async function renderSub(main: Element) {
