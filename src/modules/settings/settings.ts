@@ -1,7 +1,6 @@
 import { Database, DatabaseFactory } from '../../utils/database';
 import { BookmarkMode } from '../bookmarkMode';
 import { AwardsMode } from '../collapseAwardsMode';
-import { GuidelinesColor } from '../comments/guidelinesColor';
 import { RedirectMode } from '../redirectMode';
 import { UsernameMode } from '../users/usernameMode';
 
@@ -117,7 +116,6 @@ class SettingsManager {
     public WIDE_MODE = new SettingBoolProperty(`wideMode`);
     public CONTENT_WIDTH = new SettingStringProperty(`contentWidth`, `700`, defaultPositiveFilter(700));
     public CONTENT_OFFSET = new SettingStringProperty(`contentOffset`, `0`, defaultFilter(0));
-    public BIGGER_FONTS = new SettingBoolProperty(`biggerFonts`);
     public BIGGER_FONTS_CONTENT_SIZE = new SettingStringProperty(`biggerFontsContentSize`, `16`, defaultPositiveFilter(16));
     public BIGGER_FONTS_OTHER_SIZE = new SettingStringProperty(`biggerFontsOtherSize`, `12`, defaultPositiveFilter(12));
     public SCROLL_TO_TOP = new SettingBoolProperty(`scrollToTop`);
@@ -126,7 +124,6 @@ class SettingsManager {
     public LIGHTBOX_NAVIGATION = new SettingBoolProperty(`lightboxNavigation`);
     public COLLAPSE_AWARDS = new SettingDropdownProperty(`collapseAwards`, Object.values(AwardsMode), 1);
     public REDIRECT_MODE = new SettingDropdownProperty(`redirectMode`, Object.values(RedirectMode), 1);
-    public USER_SEARCH_SHORTCUTS = new SettingBoolProperty(`userSearchShortcuts`, false);
 
     public REMOVE_LEFT_SIDEBAR = new SettingBoolProperty(`removeLeftSidebar`, false);
     public REMOVE_RIGHT_SIDEBAR = new SettingBoolProperty(`removeRightSidebar`, false);
@@ -153,7 +150,6 @@ class SettingsManager {
     public COLLAPSE_HIGHLIGHTS = new SettingBoolProperty(`collapseHighlights`, false);
     public BACKPLATES = new SettingBoolProperty(`backplates`);
     public SELECTABLE_POSTS = new SettingBoolProperty(`selectablePosts`);
-    public UNWRAP_POST = new SettingBoolProperty(`unwrapPost`);
     public SHOW_POST_AUTHOR = new SettingBoolProperty(`showPostAuthor`);
     public SAVED_BOOKMARK_POSTS = new SettingDropdownProperty(`savedBookmarkPosts`, Object.values(BookmarkMode), 1);
     public HIDE_COMMUNITY_RECOMMENDATIONS = new SettingBoolProperty(`hideCommunityRecommendations`, false);
@@ -164,7 +160,7 @@ class SettingsManager {
     public HIDE_RELATED_POSTS = new SettingBoolProperty(`hideRelatedPosts`, false);
     public HIDE_STICKY_COMPOSER = new SettingBoolProperty(`hideStickyComposer`, false);
 
-    public UNWRAP_MORE_REPLIES = new SettingBoolProperty(`unwrapMoreReplies`, false);
+    public INLINE_DEEP_THREADS = new SettingBoolProperty(`inlineDeepThreads`);
     public USER_INFO = new SettingBoolProperty(`userInfo`, false);
     public USERNAME_MODE = new SettingDropdownProperty(`usernameMode`, Object.values(UsernameMode), 0);
     public USERNAME_MAX_SIMBOLS = new SettingStringProperty(`usernameMaxSimbols`, `50`, defaultPositiveFilter(50));
@@ -173,8 +169,6 @@ class SettingsManager {
     public GHOSTED_COMMENTS = new SettingBoolProperty(`ghostedComments`);
     public COLLAPSE_AUTOMODERATOR = new SettingBoolProperty(`collapseAutomoderator`);
     public SAVED_BOOKMARK_COMMENTS = new SettingDropdownProperty(`savedBookmarkComments`, Object.values(BookmarkMode), 1);
-    public GUIDELINES_COLOR = new SettingDropdownProperty(`guidelinesColor`, Object.values(GuidelinesColor), 0);
-    public GUIDELINES_THICK = new SettingBoolProperty(`guidelinesThick`, false);
     public RES_LAYOUT = new SettingBoolProperty(`resLayout`);
 
     constructor() {

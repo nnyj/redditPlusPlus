@@ -2,7 +2,6 @@ import { observeFor } from '../utils/tools';
 import { css } from './customCSS';
 import { renderRightSidebar } from './rightSidebar';
 import { settings } from './settings/settings';
-import { notify } from './toaster';
 
 import wideModeStyle from './wideMode.less';
 

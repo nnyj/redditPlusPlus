@@ -1,4 +1,3 @@
-import { dynamic } from '../../../utils/dynamic';
 import { SidebarSectionElements, SidebarSectionRenderer } from '../sidebarSectionRenderer';
 import { renderSubFilter } from '../subFilter';
 

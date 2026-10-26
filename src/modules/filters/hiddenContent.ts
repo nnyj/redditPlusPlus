@@ -3,7 +3,6 @@ import { appendElement, buildElement } from '../../utils/element';
 import { CURRENT_COLOR, NONE_COLOR, appendSvg } from '../../utils/svg';
 import { css } from '../customCSS';
 import { settings } from '../settings/settings';
-import { pp_log } from '../toaster';
 import { hiddenContentWindow } from './hiddenContentWindow';
 
 import hiddenIcoSvg from '@resources/hiddenIco.svg';

@@ -1,17 +1,13 @@
 import { dynamic } from '../utils/dynamic';
 import { appendElement } from '../utils/element';
-import { observeFor } from '../utils/tools';
 import { checkIsRendered } from '../utils/tools';
 import { css } from './customCSS';
-import { renderNotifications } from './notifications';
+import './notifications';
 import { renderProfileMenu } from './profileMenu/profileMenu';
-import { settings } from './settings/settings';
 
 import style from './header.less';
 
 css.addStyle(style);
-
-//let notificationsInitialized = false;
 
 export async function renderHeader(container: Element) {
     const nav = await dynamic(() => container.querySelector(`reddit-header-large`)?.querySelector(`nav`));
@@ -33,14 +29,4 @@ export async function renderHeader(container: Element) {
             renderProfileMenu();
         });
     }
-
-    /*
-    if (settings.NOTIFY_POPUP.isEnabled() && !notificationsInitialized) {
-        notificationsInitialized = true;
-        observeFor(`HEADER`, document.body, (element: HTMLElement) => {
-            if (element.getAttribute(`data-id`) == `notification-container-element` && !checkIsRendered(element)) {
-                renderNotifications(element);
-            }
-        });
-    }*/
 }

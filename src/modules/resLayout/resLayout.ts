@@ -13,6 +13,8 @@ if (settings.RES_LAYOUT.isEnabled()) {
     css.addStyle(themeStyle, `resTheme`);
     css.addStyle(sidebarStyle, `resSidebar`);
     css.addStyle(commentsStyle, `resComments`);
+    css.addVar(`--pp-content-width`, `${parseInt(settings.CONTENT_WIDTH.get())}px`);
+    css.addVar(`--pp-content-offset`, `${parseInt(settings.CONTENT_OFFSET.get())}px`);
     css.addStyle(
         Array.from(
             { length: 17 },

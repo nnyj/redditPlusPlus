@@ -1,7 +1,7 @@
 import { MAX_LOAD_LAG } from '../../defines';
 import { renderUIInput } from '../../utils/UI/input';
 import { dynamic } from '../../utils/dynamic';
-import { CURRENT_COLOR, NONE_COLOR, appendSvg, buildSvg } from '../../utils/svg';
+import { CURRENT_COLOR, NONE_COLOR, buildSvg } from '../../utils/svg';
 import { checkIsRendered } from '../../utils/tools';
 import { PrefsKey, prefs } from '../settings/prefs';
 import { settings } from '../settings/settings';

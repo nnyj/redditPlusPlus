@@ -1,5 +1,4 @@
 import { css } from '../../modules/customCSS';
-import { notify } from '../../modules/toaster';
 import { appendElement } from '../element';
 import { buildSvg } from '../svg';
 

@@ -62,8 +62,6 @@ class DynamicElementStat {
 class CommentsStat {
     observedRoots: number = 0;
     observedChilds: number = 0;
-    moreRepliesRendered: number = 0;
-    moreRepliesFailed: number = 0;
     userDataLoading: number = 0;
     userDataFailed: number = 0;
 }

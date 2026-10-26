@@ -5,7 +5,6 @@ import { buildSvg } from '../utils/svg';
 import { BookmarkMode } from './bookmarkMode';
 import { CustomCSS } from './customCSS';
 import { settings } from './settings/settings';
-import { pp_log } from './toaster';
 
 import bookmarkSavedSvg from '@resources/bookmarkSaved.svg';
 import bookmarkUnsavedSvg from '@resources/bookmarkUnsaved.svg';

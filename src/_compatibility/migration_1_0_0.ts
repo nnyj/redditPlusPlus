@@ -1,4 +1,3 @@
-import { pp_log } from '../modules/toaster';
 import { Migration } from './migrations';
 
 // from 0.2.x

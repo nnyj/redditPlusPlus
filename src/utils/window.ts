@@ -1,6 +1,6 @@
 import { css } from '../modules/customCSS';
 import { appendElement } from './element';
-import { CURRENT_COLOR, NONE_COLOR, buildSvg } from './svg';
+import { NONE_COLOR, buildSvg } from './svg';
 
 import closeWindowButtonSvg from '@resources/windowCloseButton.svg';
 

@@ -5,7 +5,7 @@ import { pascalCase } from '../../utils/tools';
 import { Window } from '../../utils/window';
 import { css } from '../customCSS';
 import { settings } from '../settings/settings';
-import { SidebarNavigation, navigationConfigs } from './sidebarNavigation';
+import { navigationConfigs } from './sidebarNavigation';
 import { sections } from './sidebarSection';
 
 import style from './sidebarSettingsWindow.less';

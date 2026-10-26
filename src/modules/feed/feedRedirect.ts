@@ -27,17 +27,12 @@ function isRedirectable() {
         return window.location.href.includes(`reddit.com/?feed=home`);
     }
 
-    const subSplit = window.location.href.split(`/r/`);
-    if (subSplit.length == 2) {
-        return !subSplit[1].includes(`/submit`) && subSplit[1].split(`/`).length <= 2;
-    }
+    // only feed front pages, pathname excludes query so `/r/sub/search?q=` is not a front page
+    const parts = window.location.pathname.split(`/`).filter(Boolean);
+    const isSubFront = parts.length == 2 && parts[0] == `r`;
+    const isCustomFront = parts.length == 4 && parts[0] == `user` && parts[2] == `m`;
 
-    const customSplit = window.location.href.split(`/m/`);
-    if (customSplit.length == 2) {
-        return customSplit[1].split(`/`).length <= 2;
-    }
-
-    return false;
+    return isSubFront || isCustomFront;
 }
 
 export function initializeFeedRedirect() {

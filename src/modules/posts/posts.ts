@@ -47,7 +47,7 @@ async function postDataLoader(post: string): Promise<PostData> {
 
     const postId = post.split(`:`);
 
-    const { status, result } = await requestAPI(`/r/${postId[0]}/comments/${postId[1]}.json`);
+    const { result } = await requestAPI(`/r/${postId[0]}/comments/${postId[1]}.json`);
 
     if (result != null && result.message == null) {
         for (const item of result) {
@@ -103,7 +103,7 @@ export async function renderPost(post: Element) {
 
     renderBookmarkPost(post);
 
-    renderCollapseAward(post, ContentType.Post);
+    renderCollapseAward(post);
 
     if (settings.SELECTABLE_POSTS.isEnabled()) {
         const fullPostLink = post.querySelector(`a[slot="full-post-link"]`);

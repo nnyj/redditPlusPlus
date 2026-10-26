@@ -3,16 +3,14 @@ import { ContentType, MAX_LOAD_LAG } from '../../defines';
 import { dynamic } from '../../utils/dynamic';
 import { checkIsRendered, observeChildren } from '../../utils/tools';
 import { renderCommentBookmark } from '../bookmark';
-import { renderCollapseAward } from '../collapseAwards';
 import { css } from '../customCSS';
 import { filterComment } from '../filters/filters';
 import { lightbox } from '../images/customLightbox';
 import { renderResScore } from '../resLayout/resLayout';
 import { settings } from '../settings/settings';
-import { UserInfoElements, renderUserInfo } from '../users/userInfo';
+import { renderUserInfo } from '../users/userInfo';
 import { renderContextMenu } from './contextMenu';
-import { renderGuidlines } from './guidelines';
-import { renderMoreReplies } from './moreReplies';
+import { registerInlineThreads } from './inline_thread';
 import { OnCommentsTreeLoaded, renderCommentsSortButtons } from './sortButtons';
 import { renderUserTags } from './userTags';
 
@@ -26,6 +24,8 @@ let commentsMutations: MutationObserver | null = null;
 
 export async function renderComments(container: Element) {
     css.addStyle(style, `comments`);
+
+    registerInlineThreads();
 
     if (settings.HIDE_SHARE.isEnabled()) {
         css.addStyle(hideShareStyle, `hideShare`);
@@ -46,12 +46,12 @@ export async function renderComments(container: Element) {
         rootIntersector = new IntersectionObserver(
             entries => {
                 for (const entry of entries) {
-                    const comment = entry.target?.parentElement?.parentElement;
-                    if (entry.isIntersecting && isComment(comment)) {
-                        renderComment(comment!);
+                    const comment = entry.target;
+                    if (entry.isIntersecting) {
+                        renderComment(comment);
 
                         // registry childs when root becomes visible
-                        registerAllComments(comment!);
+                        registerAllComments(comment);
 
                         if (DEBUG && PROFILE_USER_DATA) {
                             profiler_comments.observedRoots--;
@@ -61,7 +61,7 @@ export async function renderComments(container: Element) {
                     }
                 }
             },
-            { threshold: 0.05 }
+            { threshold: 0 }
         );
     }
 
@@ -70,15 +70,14 @@ export async function renderComments(container: Element) {
 
         if (DEBUG && PROFILE_USER_DATA) {
             profiler_comments.observedChilds = 0;
-            profiler_comments.moreRepliesRendered = 0;
         }
     } else {
         commentsIntersector = new IntersectionObserver(
             entries => {
                 for (const entry of entries) {
-                    const comment = entry.target?.parentElement?.parentElement;
-                    if (entry.isIntersecting && isComment(comment)) {
-                        renderComment(comment!);
+                    const comment = entry.target;
+                    if (entry.isIntersecting) {
+                        renderComment(comment);
 
                         if (DEBUG && PROFILE_USER_DATA) {
                             profiler_comments.observedChilds--;
@@ -88,7 +87,7 @@ export async function renderComments(container: Element) {
                     }
                 }
             },
-            { threshold: 0.05 }
+            { threshold: 0 }
         );
     }
 
@@ -110,14 +109,13 @@ export async function renderComments(container: Element) {
                             OnCommentsTreeLoaded();
                         }
 
-                        // dynamic comments
-                        if (node.matches(`shreddit-comment`)) {
-                            if (node.getAttribute(`depth`) == `0`) {
-                                registerRoot(node);
+                        // dynamic comments, also the ones inside an added wrapper
+                        const addedComments = node.matches(`shreddit-comment`) ? [node, ...node.querySelectorAll(`shreddit-comment`)] : node.querySelectorAll(`shreddit-comment`);
+                        for (const comment of addedComments) {
+                            if (comment.getAttribute(`depth`) == `0`) {
+                                registerRoot(comment);
                             } else {
-                                registerComment(node);
-
-                                registerAllComments(node);
+                                registerComment(comment);
                             }
                         }
 
@@ -150,7 +148,8 @@ function registerAllRoots(container: Element) {
 function registerRoot(comment: Element) {
     if (checkIsRendered(comment)) return;
 
-    rootIntersector!.observe(comment.querySelector(`summary`)!);
+    // the comment itself, an observed summary stops firing if Reddit replaces it
+    rootIntersector!.observe(comment);
 
     if (DEBUG && PROFILE_USER_DATA) {
         profiler_comments.observedRoots++;
@@ -166,7 +165,7 @@ function registerAllComments(container: Element) {
 function registerComment(comment: Element) {
     if (checkIsRendered(comment)) return;
 
-    commentsIntersector!.observe(comment.querySelector(`summary`)!);
+    commentsIntersector!.observe(comment);
 
     if (DEBUG && PROFILE_USER_DATA) {
         profiler_comments.observedChilds++;
@@ -174,8 +173,6 @@ function registerComment(comment: Element) {
 }
 
 export async function renderComment(comment: Element) {
-    //renderGuidlines(comment);
-
     renderResScore(comment);
 
     // skip [deleted]
@@ -210,8 +207,6 @@ export async function renderComment(comment: Element) {
             }
         });
     }
-
-    renderMoreReplies(comment);
 
     // add anchors
     const commentAuthor = commentMeta.querySelector(`faceplate-tracker[noun="comment_author"]`);
@@ -275,11 +270,9 @@ export async function renderComment(comment: Element) {
 }
 
 async function waitActionRow(comment: Element) {
-    const actionRow = await observeChildren(comment.querySelector(`div[slot="actionRow"]`)!);
+    await observeChildren(ownElement(comment, `div[slot="actionRow"]`)!);
 
-    renderCollapseAward(comment, ContentType.Comment);
-
-    const contextMenuButton = await dynamic(() => comment.querySelector(`shreddit-overflow-menu`)?.shadowRoot?.querySelector(`rpl-dropdown`));
+    const contextMenuButton = await dynamic(() => ownElement(comment, `shreddit-overflow-menu`)?.shadowRoot?.querySelector(`rpl-dropdown`));
 
     if (!contextMenuButton) return;
 
@@ -294,6 +287,7 @@ async function waitActionRow(comment: Element) {
     );
 }
 
-function isComment(element: Element | null | undefined): boolean {
-    return element?.matches(`shreddit-comment`) ?? false;
+// querySelector on a comment also reaches its replies, which render first when the comment's own row is late
+function ownElement(comment: Element, selector: string): Element | null {
+    return [...comment.querySelectorAll(selector)].find(element => element.closest(`shreddit-comment`) == comment) ?? null;
 }

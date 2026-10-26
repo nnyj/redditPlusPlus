@@ -44,7 +44,7 @@ function renderSettingsWindow(win: Window, context: any) {
     addSettingToggle(`Show request limit warnings`, null, settings.API_WARNINGS, [SettingBadge.APIRequests]);
 
     addSubtitle(`Page view`);
-    addSettingToggle(`Wide mode`, `Focus on content by moving the right sidebar to the screen edge`, settings.WIDE_MODE);
+    if (settings.RES_LAYOUT.isDisabled()) addSettingToggle(`Wide mode`, `Focus on content by moving the right sidebar to the screen edge`, settings.WIDE_MODE);
     addSettingString(`Content width`, `Width of the feed and comments in pixels`, settings.CONTENT_WIDTH);
     addSettingString(`Content offset`, `Horizontal offset of the feed and comments in pixels`, settings.CONTENT_OFFSET);
     addSettingToggle(`Remove left sidebar`, null, settings.REMOVE_LEFT_SIDEBAR);
@@ -72,7 +72,6 @@ function renderSettingsWindow(win: Window, context: any) {
     addSettingOptions(`Nickname mode`, `Display nickname instead of the profile name`, settings.USERNAME_MODE, [SettingBadge.APIRequests]);
     addSettingString(`Nickname max symbols`, `Shorten nicknames that exceed this lengt`, settings.USERNAME_MAX_SIMBOLS);
     addSettingToggle(`User tags`, `Enable custom user tags (sets via the comment context menu)`, settings.USER_TAGS);
-    //addSettingToggle(`Search shortcuts`, `Add search buttons to the user profile page`, settings.USER_SEARCH_SHORTCUTS); //legacy
 
     addSubtitle(`Feed page`);
     addSettingToggle(`Feed buttons`, `Unwrap sorting buttons`, settings.FEED_BUTTONS);
@@ -81,11 +80,10 @@ function renderSettingsWindow(win: Window, context: any) {
     addSettingToggle(`Hide community recommendations`, `Hides the related communities section in the feed`, settings.HIDE_COMMUNITY_RECOMMENDATIONS);
 
     addSubtitle(`Posts`);
-    addSettingToggle(`Soft background`, `Apply a soft gradient background to hovered posts`, settings.BACKPLATES);
+    if (settings.RES_LAYOUT.isDisabled()) addSettingToggle(`Soft background`, `Apply a soft gradient background to hovered posts`, settings.BACKPLATES);
     addSettingToggle(`Show post's author`, `Applies to Home and Popular feeds`, settings.SHOW_POST_AUTHOR);
     addSettingToggle(`Show flairs always`, `Always display flairs in specific feeds (Home, Popular) and enable flair-based filtering`, settings.FLAIR_SHOW_ALWAYS, [SettingBadge.APIRequests]);
     addSettingToggle(`Selectable text`, `Allow text selection in posts within the feed`, settings.SELECTABLE_POSTS);
-    addSettingToggle(`Unwrap button`, `Show an expand button for long-text posts`, settings.UNWRAP_POST);
     addSettingOptions(`Save bookmarks`, `Show the save button next to vote buttons`, settings.SAVED_BOOKMARK_POSTS);
 
     addSubtitle(`Comments page`);
@@ -95,11 +93,9 @@ function renderSettingsWindow(win: Window, context: any) {
     addSettingToggle(`Hide sticky "Join the conversation"`, `Hide the "Join the conversation" bar when scrolling`, settings.HIDE_STICKY_COMPOSER);
 
     addSubtitle(`Comments`);
-    addSettingToggle(`Unwrap "more replies"`, `Automatically unwrap more replies when it becomes visible`, settings.UNWRAP_MORE_REPLIES);
+    addSettingToggle(`Inline deep threads`, `Load deep thread "more replies" in place instead of opening a new page`, settings.INLINE_DEEP_THREADS);
     addSettingToggle(`Hide share button`, `Move the share button to the comment context menu`, settings.HIDE_SHARE);
     addSettingToggle(`Ghosted comments`, `Fade comments with a negative score`, settings.GHOSTED_COMMENTS);
-    //addSettingOptions(`Guidelines color`, null, settings.GUIDELINES_COLOR, [SettingBadge.New]);
-    //addSettingToggle(`Thick guidelines`, `Doubling the thickness of comment guidelines`, settings.GUIDELINES_THICK, [SettingBadge.New]);
     addSettingToggle(`Collapse pinned`, `Automatically collapse pinned comments (AutoModerator and moderators)`, settings.COLLAPSE_AUTOMODERATOR);
     addSettingOptions(`Save bookmarks`, `Show the save button next to vote buttons`, settings.SAVED_BOOKMARK_COMMENTS);
 

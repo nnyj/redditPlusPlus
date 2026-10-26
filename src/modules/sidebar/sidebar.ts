@@ -73,5 +73,5 @@ button inline-flex `;
 
     const settingsButtonSpan = appendElement(settingsButton, `span`, [`flex`, `items-center`, `justify-center`]);
     const settingsButtonSpanSpan = appendElement(settingsButtonSpan, `span`, `flex`);
-    const settingsButtonSvg = appendSvg(settingsButtonSpanSpan, settingGearSvg, 16, 16);
+    appendSvg(settingsButtonSpanSpan, settingGearSvg, 16, 16);
 }

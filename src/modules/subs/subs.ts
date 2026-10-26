@@ -41,7 +41,7 @@ async function subDataLoader(sub: string): Promise<SubData> {
     let subData = {} as SubData;
     subData.flairs = [];
 
-    const { status, result } = await requestAPI(`/r/${sub}/api/link_flair_v2.json`);
+    const { result } = await requestAPI(`/r/${sub}/api/link_flair_v2.json`);
 
     if (result != null && result.message == null) {
         for (const loadedFlair of result) {

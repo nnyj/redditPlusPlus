@@ -1,6 +1,6 @@
 import { PROFILE_USER_DATA, profiler_comments } from '../../_debug/debug';
 import { ContentType, DAY_SECONDS } from '../../defines';
-import { appendElement, prependElement } from '../../utils/element';
+import { prependElement } from '../../utils/element';
 import { buildSvg } from '../../utils/svg';
 import { settings } from '../settings/settings';
 import { UsernameMode } from './usernameMode';

@@ -1,7 +1,6 @@
 import { DAY_SECONDS, HOUR_SECONDS } from '../../defines';
 import { appendElement } from '../../utils/element';
 import { buildSvg } from '../../utils/svg';
-import { css } from '../customCSS';
 import { settings } from '../settings/settings';
 import { notify } from '../toaster';
 import { BLOCK_OPERATION, FOLLOW_OPERATION } from '../users/userOperations';

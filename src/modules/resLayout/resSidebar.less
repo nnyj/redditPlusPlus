@@ -2,10 +2,13 @@
 // --ais-w is the width of the ai-summarizer button tab, 0 when that script is absent.
 
 // The feed column has a fixed 1120px width, which overflows once the sidebar column is gone
+// Content width and offset settings cap and shift it
 #subgrid-container {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: var(--pp-content-width, 100%) !important;
     min-width: 0;
+    position: relative;
+    left: var(--pp-content-offset, 0px);
 }
 
 .main-container {

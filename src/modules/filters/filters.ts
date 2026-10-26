@@ -228,7 +228,7 @@ function blurContent(body: Element, state: FiltrationState) {
 
     const showButtonContent = appendElement(showButton, `div`, `pp_blured_button_content`);
 
-    const icon = appendSvg(showButtonContent, hiddenSvg, 16, 16, { strokeColor: CURRENT_COLOR, fillColor: NONE_COLOR });
+    appendSvg(showButtonContent, hiddenSvg, 16, 16, { strokeColor: CURRENT_COLOR, fillColor: NONE_COLOR });
 
     const showContent = appendElement(showButtonContent, `span`);
     showContent.textContent = state.blur!.text;
