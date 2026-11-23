@@ -30,7 +30,8 @@ function isRedirectable() {
 
     // only feed front pages, pathname excludes query so `/r/sub/search?q=` is not a front page
     const parts = window.location.pathname.split(`/`).filter(Boolean);
-    const isSubFront = parts.length == 2 && parts[0] == `r`;
+    // r/Dashboard is the RES dashboard page, a sort redirect drops its tab hash
+    const isSubFront = parts.length == 2 && parts[0] == `r` && parts[1].toLowerCase() != `dashboard`;
     const isCustomFront = parts.length == 4 && parts[0] == `user` && parts[2] == `m`;
 
     return isSubFront || isCustomFront;
